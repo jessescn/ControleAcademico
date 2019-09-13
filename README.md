@@ -1,12 +1,12 @@
 # Controle Acadêmico 📚
 
-O objetivo desse crawler é obter os dados referentes as disciplinas presentes no histórico acadêmico do estudante no [Controle Acadêmico]('https://pre.ufcg.edu.br:8443/ControleAcademicoOnline/'). 
+O objetivo desse crawler é obter os dados referentes as disciplinas presentes no histórico acadêmico do estudante no [Controle Acadêmico](https://pre.ufcg.edu.br:8443/ControleAcademicoOnline/). 
 
 Esse código tem como usuário principal os estudantes da Universidade Federal de Campina Grande (UFCG).
 
 ## Configuração
 
-Para instalar as dependências do projeto, é necessário ter instalado o [pipenv]('https://docs.pipenv.org/en/latest/install/'). Após a instalação, você so precisa executar esses dois comandos dentro da pasta do projeto.
+Para instalar as dependências do projeto, é necessário ter instalado o [pipenv](https://docs.pipenv.org/en/latest/install/). Após a instalação, você so precisa executar esses dois comandos dentro da pasta do projeto.
 
 ``` bash
 # Instalando as dependências usando o pipenv
