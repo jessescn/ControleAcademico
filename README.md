@@ -1,6 +1,6 @@
 # Controle Acadêmico 📚
 
-O objetivo desse crawler é obter os dados referentes as disciplinas presentes no histórico acadêmico do estudante no [_Controle Acadêmico_]('https://pre.ufcg.edu.br:8443/ControleAcademicoOnline/). 
+O objetivo desse crawler é obter os dados referentes as disciplinas presentes no histórico acadêmico do estudante no [Controle Acadêmico]('https://pre.ufcg.edu.br:8443/ControleAcademicoOnline/'). 
 
 Esse código tem como usuário principal os estudantes da Universidade Federal de Campina Grande (UFCG).
 
