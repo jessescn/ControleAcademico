@@ -44,7 +44,8 @@ class ControleSpider(scrapy.Spider):
                     "Código": sub_register,
                     "Disciplina": sub_name,
                     "Tipo": sub_type,
-                    "Créditos": sub_workload,
+                    "Créditos": sub_credits,
+                    "Carga horária": sub_workload,
                     "Média": sub_mean,
                     "Situação": sub_status,
                     "Período": sub_period
