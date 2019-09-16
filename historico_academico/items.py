@@ -8,7 +8,15 @@
 import scrapy
 
 
-class HistoricoAcademicoItem(scrapy.Item):
+class DisciplinaItem(scrapy.Item):
     # define the fields for your item here like:
-    # name = scrapy.Field()
+    codigo = scrapy.Field()
+    disciplina = scrapy.Field()
+    tipo = scrapy.Field()
+    creditos = scrapy.Field()
+    carga_horaria = scrapy.Field()
+    media = scrapy.Field()
+    situacao = scrapy.Field()
+    periodo = scrapy.Field()
+
     pass
