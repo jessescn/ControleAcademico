@@ -12,4 +12,4 @@ scrapy = "*"
 python_version = "3.6"
 
 [scripts]
-historico="scrapy crawl controle  -o historico.csv"
+historico="scrapy crawl controle"
