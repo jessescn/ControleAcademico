@@ -7,8 +7,15 @@ import scrapy
 from historico_academico.items import DisciplinaItem
 
 def authentation_failed(response):
-    """ Método para checar se a autenticação falhou """
+    """ Função para checar se a autenticação falhou """
     return response.css('div.alert p::text').get() == 'Erro'
+
+def get_credentials():
+    """Função para receber os dados de autenticação do usuário"""
+    print('\n--------------- AUTENTICAÇÃO ---------------\n')
+    matricula = input('Insira sua matrícula: ')
+    senha = getpass('Digite sua senha: ')
+    return [str(matricula), senha]
 
 class ControleSpider(scrapy.Spider):
     """Spider do Controle Acadêmico
@@ -23,9 +30,7 @@ class ControleSpider(scrapy.Spider):
 
     def parse(self, response):
         """ Callback default da requisição as URLs presentes no array 'start_urls """
-        print('\n--------------- AUTENTICAÇÃO ---------------\n')
-        matricula = str(input('Insira sua matrícula: '))
-        senha = getpass('Digite sua senha: ')
+        [matricula, senha] = get_credentials()
         return scrapy.FormRequest.from_response(
             response,
             formdata={'login': matricula, 'senha':senha},
