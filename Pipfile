@@ -13,4 +13,4 @@ click = "*"
 python_version = "3.6"
 
 [scripts]
-historico="python3 run.py historico"
+controle="python3 run.py"
