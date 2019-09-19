@@ -4,6 +4,14 @@ O objetivo desse crawler é obter os dados  presentes no [Controle Acadêmico](h
 
 Esse código tem como usuário principal os estudantes da Universidade Federal de Campina Grande (UFCG).
 
+## Comandos
+
+Para saber mais detalhes acerca dos comandos disponíveis, é so digitar o comando abaixo.
+
+``` bash
+ $ pipenv run controle [COMANDO] --help
+```
+
 ## Configuração
 
 Para executar a aplicação, é necessário ter instalado o pip na sua máquina. Você pode verificar se você tem o pip instalado atráves desse comando
