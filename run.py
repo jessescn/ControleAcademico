@@ -9,14 +9,18 @@ class User(object):
     def __init__(self):
         self.matricula = None
         self.senha = None
+        self.file_name = "dados"
+        self.format = "json"
 
 
 pass_user = click.make_pass_decorator(User, ensure=True)
 
-def authentication(user):
+def setup(user):
     """Recebe os dados de autenticação do usuário"""
     user.matricula = click.prompt('Insira sua matricula', type=str)
     user.senha =  click.prompt('Insira sua senha', hide_input=True, type=str)
+    user.file_name = click.prompt('Qual será nome arquivo do arquivo?', default="data")
+    user.format = click.prompt('Qual será o formato do arquivo?', default="json") 
 
 @click.group()
 def cli():
@@ -27,10 +31,10 @@ def cli():
 @pass_user
 def get_subjects(user):
     """ Retorna os dados das disciplinas do aluno disponiveis no controle acadêmico. """
-    authentication(user)
+    setup(user)
     process = CrawlerProcess(settings={
-    'FEED_FORMAT': 'json',
-    'FEED_URI': 'historico.json',
+    'FEED_FORMAT': user.format,
+    'FEED_URI': user.file_name + '.' + user.format,
     'FEED_EXPORT_ENCODING':'utf-8'
     })
     ControleSpider.matricula = user.matricula
@@ -42,7 +46,7 @@ def get_subjects(user):
 @pass_user
 def get_schedule(user):
     """Retorna as disciplinas que estão sendo cursadas e seus respectivos horários."""
-    authentication(user)
+    setup(user)
     pass
     
 if __name__ == '__main__':
