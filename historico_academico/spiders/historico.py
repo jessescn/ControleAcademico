@@ -10,7 +10,7 @@ def authentation_failed(response):
     """ Função para checar se a autenticação falhou """
     return response.css('div.alert p::text').get() == 'Erro'
 
-class ControleSpider(scrapy.Spider):
+class HistoricoSpider(scrapy.Spider):
     """Spider do Controle Acadêmico
 
     Spider responsável por acessar o controle
@@ -20,7 +20,7 @@ class ControleSpider(scrapy.Spider):
     """
     matricula = None
     senha = None
-    name = 'controle'
+    name = 'historico'
     start_urls = ['https://pre.ufcg.edu.br:8443/ControleAcademicoOnline/Controlador?command=Home']
 
     def parse(self, response):
@@ -45,7 +45,7 @@ class ControleSpider(scrapy.Spider):
             print('\nDados obtidos com sucesso!\n')
         else:
             print('\nCredenciais inválidas!\n')
-            os.remove('historico.csv')
+
 
     def get_subjects(self, response):
         """ Callback da página do histórico

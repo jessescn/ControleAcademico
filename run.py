@@ -2,7 +2,7 @@
 import click
 from scrapy.crawler import CrawlerProcess
 from scrapy.utils.project import get_project_settings
-from historico_academico.spiders.controle import ControleSpider
+from historico_academico.spiders.historico import HistoricoSpider 
 
 class User(object):
 
@@ -42,16 +42,15 @@ def get_subjects(user):
     'LOG_ENABLED': False
     })
 
-    ControleSpider.matricula = user.matricula
-    ControleSpider.senha = user.senha
-    process.crawl(ControleSpider)
+    HistoricoSpider.matricula = user.matricula
+    HistoricoSpider.senha = user.senha
+    process.crawl(HistoricoSpider)
     process.start()
 
 @cli.command('horario', short_help="Retorna os horários das disciplinas.")
 @pass_user
 def get_schedule(user):
     """Retorna as disciplinas que estão sendo cursadas e seus respectivos horários."""
-    authentication(user)
     pass
     
 if __name__ == '__main__':
