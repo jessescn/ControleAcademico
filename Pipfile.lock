@@ -1,7 +1,7 @@
 {
     "_meta": {
         "hash": {
-            "sha256": "bf08334d38ae9c15e3ce5d97fa9d5e77ad97554dec1c4d0996fbeba525ae2bfe"
+            "sha256": "7140df6e6f22ad931a563766e52fba1bf63d75b6322293a05e965b4c2606c975"
         },
         "pipfile-spec": 6,
         "requires": {
@@ -70,6 +70,14 @@
             ],
             "version": "==1.12.3"
         },
+        "click": {
+            "hashes": [
+                "sha256:2335065e6395b9e67ca716de5f7526736bfa6ceead690adf616d925bdc622b13",
+                "sha256:5b94b49521f6456670fdb30cd82a4eca9412788a93fa6dd6df72c94d5a8ff2d7"
+            ],
+            "index": "pypi",
+            "version": "==7.0"
+        },
         "constantly": {
             "hashes": [
                 "sha256:586372eb92059873e29eba4f9dec8381541b4d3834660707faf8ba59146dfc35",
@@ -105,24 +113,6 @@
             ],
             "version": "==1.1.0"
         },
-        "enum34": {
-            "hashes": [
-                "sha256:2d81cbbe0e73112bdfe6ef8576f2238f2ba27dd0d55752a776c41d38b7da2850",
-                "sha256:644837f692e5f550741432dd3f223bbb9852018674981b1664e5dc339387588a",
-                "sha256:6bd0f6ad48ec2aa117d3d141940d484deccda84d4fcd884f5c3d93c23ecd8c79",
-                "sha256:8ad8c4783bf61ded74527bffb48ed9b54166685e4230386a9ed9b1279e2df5b1"
-            ],
-            "markers": "python_version < '3'",
-            "version": "==1.1.6"
-        },
-        "functools32": {
-            "hashes": [
-                "sha256:89d824aa6c358c421a234d7f9ee0bd75933a67c29588ce50aaa3acdf4d403fa0",
-                "sha256:f6253dfbe0538ad2e387bd8fdfd9293c925d63553f5813c4e587745416501e6d"
-            ],
-            "markers": "python_version < '3.0'",
-            "version": "==3.2.3.post2"
-        },
         "hyperlink": {
             "hashes": [
                 "sha256:4288e34705da077fada1111a24a0aa08bb1e76699c9ce49876af722441845654",
@@ -143,14 +133,6 @@
                 "sha256:7b751696aaf36eebfab537e458929e194460051ccad279c72b755a167eebd4b3"
             ],
             "version": "==17.5.0"
-        },
-        "ipaddress": {
-            "hashes": [
-                "sha256:64b28eec5e78e7510698f6d4da08800a5c575caa4a286c93d651c5d3ff7b6794",
-                "sha256:b146c751ea45cad6188dd6cf2d9b757f6f4f8d6ffb96a023e6f2e26eea02a72c"
-            ],
-            "markers": "python_version < '3.3'",
-            "version": "==1.0.22"
         },
         "lxml": {
             "hashes": [

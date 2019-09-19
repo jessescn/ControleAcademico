@@ -10,13 +10,6 @@ def authentation_failed(response):
     """ Função para checar se a autenticação falhou """
     return response.css('div.alert p::text').get() == 'Erro'
 
-def get_credentials():
-    """Função para receber os dados de autenticação do usuário"""
-    print('\n--------------- AUTENTICAÇÃO ---------------\n')
-    matricula = input('Insira sua matrícula: ')
-    senha = getpass('Digite sua senha: ')
-    return [str(matricula), senha]
-
 class ControleSpider(scrapy.Spider):
     """Spider do Controle Acadêmico
 
@@ -25,15 +18,16 @@ class ControleSpider(scrapy.Spider):
     usuário, para obter os dados das disciplinas
     pagas pelo mesmo presentes no histórico.
     """
+    matricula = None
+    senha = None
     name = 'controle'
     start_urls = ['https://pre.ufcg.edu.br:8443/ControleAcademicoOnline/Controlador?command=Home']
 
     def parse(self, response):
         """ Callback default da requisição as URLs presentes no array 'start_urls """
-        [matricula, senha] = get_credentials()
         return scrapy.FormRequest.from_response(
             response,
-            formdata={'login': matricula, 'senha':senha},
+            formdata={'login': self.matricula, 'senha':self.senha},
             callback=self.after_login
         )
 
