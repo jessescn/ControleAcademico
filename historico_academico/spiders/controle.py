@@ -41,6 +41,8 @@ class ControleSpider(scrapy.Spider):
         if not authentation_failed(response):
             yield scrapy.Request(response.urljoin('?command=AlunoHistorico'),
                                                     callback=self.get_subjects)
+
+            print('\nDados obtidos com sucesso!\n')
         else:
             print('\nCredenciais inválidas!\n')
             os.remove('historico.csv')
