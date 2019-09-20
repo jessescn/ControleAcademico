@@ -1,8 +1,6 @@
 """Arquivo responsável por conter o Spider
     referente ao controle acadêmico e suas funções auxiliares
 """
-from getpass import getpass
-import os
 import scrapy
 from historico_academico.items import DisciplinaItem
 
@@ -18,10 +16,12 @@ class HistoricoSpider(scrapy.Spider):
     usuário, para obter os dados das disciplinas
     pagas pelo mesmo presentes no histórico.
     """
-    matricula = None
-    senha = None
     name = 'historico'
     start_urls = ['https://pre.ufcg.edu.br:8443/ControleAcademicoOnline/Controlador?command=Home']
+
+    def __init__(self, matricula=None, senha=None):
+        self.matricula = matricula
+        self.senha = senha
 
     def parse(self, response):
         """ Callback default da requisição as URLs presentes no array 'start_urls """
@@ -40,7 +40,7 @@ class HistoricoSpider(scrapy.Spider):
          """
         if not authentation_failed(response):
             yield scrapy.Request(response.urljoin('?command=AlunoHistorico'),
-                                                    callback=self.get_subjects)
+                                                     callback=self.get_subjects)
 
             print('\nDados obtidos com sucesso!\n')
         else:

@@ -17,11 +17,12 @@ def authentication(user):
     user.matricula = click.prompt('\nInsira sua matricula', type=str)
     user.senha =  click.prompt('Insira sua senha', hide_input=True, type=str)
 
-def file_configs():
+def file_config():
     """Recebe os dados referentes ao arquivo destino dos dados"""
     file_name = click.prompt('\nQual será nome arquivo do arquivo?', default="dados")
     file_extension = click.prompt('Qual será o formato do arquivo?', default="json")
-    return [ file_name , file_extension ]
+    file = '{}.{}'.format(file_name, file_extension)
+    return [ file , file_extension ]
 
 @click.group()
 def cli():
@@ -33,18 +34,16 @@ def cli():
 def get_subjects(user):
     """ Retorna os dados das disciplinas do aluno disponiveis no controle acadêmico. """
     authentication(user)
-    [ file_name, file_extension ] = file_configs()
+    [ file_name, file_extension ] = file_config()
 
     process = CrawlerProcess(settings={
     'FEED_FORMAT': file_extension,
-    'FEED_URI': file_name + '.' + file_extension,
+    'FEED_URI': file_name,
     'FEED_EXPORT_ENCODING':'utf-8',
     'LOG_ENABLED': False
     })
 
-    HistoricoSpider.matricula = user.matricula
-    HistoricoSpider.senha = user.senha
-    process.crawl(HistoricoSpider)
+    process.crawl(HistoricoSpider, matricula=user.matricula, senha=user.senha)
     process.start()
 
 @cli.command('horario', short_help="Retorna os horários das disciplinas.")
