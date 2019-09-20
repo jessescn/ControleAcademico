@@ -2,7 +2,8 @@
 import click
 from scrapy.crawler import CrawlerProcess
 from scrapy.utils.project import get_project_settings
-from historico_academico.spiders.historico import HistoricoSpider 
+from historico_academico.spiders.historico import HistoricoSpider
+from historico_academico.spiders.horario import HorarioSpider
 
 class User(object):
 
@@ -12,10 +13,23 @@ class User(object):
 
 pass_user = click.make_pass_decorator(User, ensure=True)
 
+@pass_user
 def authentication(user):
     """Recebe os dados de autenticação do usuário"""
     user.matricula = click.prompt('\nInsira sua matricula', type=str)
     user.senha =  click.prompt('Insira sua senha', hide_input=True, type=str)
+
+def setup_process():
+    """Retorna o processo que executará o Spider"""
+    [ file_name, file_extension ] = file_config()
+
+    process = CrawlerProcess(settings={
+    'FEED_FORMAT': file_extension,
+    'FEED_URI': file_name,
+    'FEED_EXPORT_ENCODING':'utf-8',
+    'LOG_ENABLED': False
+    })
+    return process
 
 def file_config():
     """Recebe os dados referentes ao arquivo destino dos dados"""
@@ -23,6 +37,7 @@ def file_config():
     file_extension = click.prompt('Qual será o formato do arquivo?', default="json")
     file = '{}.{}'.format(file_name, file_extension)
     return [ file , file_extension ]
+
 
 @click.group()
 def cli():
@@ -33,16 +48,8 @@ def cli():
 @pass_user
 def get_subjects(user):
     """ Retorna os dados das disciplinas do aluno disponiveis no controle acadêmico. """
-    authentication(user)
-    [ file_name, file_extension ] = file_config()
-
-    process = CrawlerProcess(settings={
-    'FEED_FORMAT': file_extension,
-    'FEED_URI': file_name,
-    'FEED_EXPORT_ENCODING':'utf-8',
-    'LOG_ENABLED': False
-    })
-
+    authentication()
+    process = setup_process()
     process.crawl(HistoricoSpider, matricula=user.matricula, senha=user.senha)
     process.start()
 
@@ -50,7 +57,16 @@ def get_subjects(user):
 @pass_user
 def get_schedule(user):
     """Retorna as disciplinas que estão sendo cursadas e seus respectivos horários."""
-    pass
+    authentication()
+
+    periodo = click.prompt('\nPeríodo', default="2019.1", type=int)
+    ano = periodo.split('.')[0]
+    semestre = periodo.split('.')[1]
+
+    process = setup_process()
+    process.crawl(HorarioSpider, matricula=user.matricula, senha=user.senha, ano=ano, semestre=semestre)
+    process.start()
+    
     
 if __name__ == '__main__':
     cli()
