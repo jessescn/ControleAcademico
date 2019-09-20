@@ -19,4 +19,11 @@ class DisciplinaItem(scrapy.Item):
     situacao = scrapy.Field()
     periodo = scrapy.Field()
 
-    pass
+class HorarioItem(scrapy.Item):
+    
+    disciplina = scrapy.Field()
+    codigo = scrapy.Field()
+    turma = scrapy.Field()
+    creditos = scrapy.Field()
+    horarios = scrapy.Field()
+    carga_horaria = scrapy.Field()

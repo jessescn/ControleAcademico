@@ -1,11 +1,19 @@
 # -*- coding: utf-8 -*-
 import scrapy
+from historico_academico.items import HorarioItem
 
 def authentation_failed(response):
     """ Função para checar se a autenticação falhou """
     return response.css('div.alert p::text').get() == 'Erro'
 
 class HorarioSpider(scrapy.Spider):
+    """Spider dos Horários
+
+    Scrapy responsável por acessar o controle
+    acadêmico a partir da matricula e senha
+    fornecidos pelo usuário e buscar os horários
+    das disciplinas de um determinado semestre. 
+    """
     name = 'horario'
     start_urls = ['https://pre.ufcg.edu.br:8443/ControleAcademicoOnline/Controlador?command=Home']
 
@@ -39,23 +47,37 @@ class HorarioSpider(scrapy.Spider):
                 print('\nCredenciais inválidas!\n')
 
     def get_schedules(self, response):
+        """Callback responsável por extrair as informações
+
+        O método recebe a response e extrai os dados
+        referentes aos horários das disciplinas, incluin-
+        do dados como codigo, salas, dias, horários, nome,
+        dentre outros.
+        """
         table = response.xpath('//table[@class="table table-bordered table-striped table-condensed"]/tbody/tr')
         
         for line in table:
             data = line.xpath('./td//text()').getall()
-             
-            turma = data[0]
-            codigo = data[1]
-            nome = data[2]
-            creditos = data[3]
-            horas = data[4]
-            horarios = []
+            subject_schedules = []
 
             for i in range(4, len(data) - 1):
-                sala_horario = {
-                    "horario": data[i].split(' ')[1],
-                    "sala": data[i].split(' ')[2].replace('(', '').replace(')', '')
+                values = data[i].replace('\r\n', '' ).split()
+                schedule_pair = {
+                    "dia":values[0],
+                    "horario": values[1],
+                    "sala": values[2].replace('(', '').replace(')', '')
                 } 
-                horarios.append(sala_horario)
+                subject_schedules.append(schedule_pair)
+            
+            subject = data[1].replace('\r\n', '' ).split('-')
+            
+            schedule = HorarioItem(
+                                codigo=subject[0],
+                                disciplina=subject[1],
+                                creditos=data[2],
+                                carga_horaria=data[3],
+                                turma=data[0],
+                                horarios=subject_schedules)
 
+            yield schedule
             

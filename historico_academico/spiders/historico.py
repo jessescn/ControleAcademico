@@ -9,7 +9,7 @@ def authentation_failed(response):
     return response.css('div.alert p::text').get() == 'Erro'
 
 class HistoricoSpider(scrapy.Spider):
-    """Spider do Controle Acadêmico
+    """Spider dp Histórico Acadêmico
 
     Spider responsável por acessar o controle
     a partir da matricula e senha fornecidos pelo

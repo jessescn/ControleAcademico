@@ -59,7 +59,7 @@ def get_schedule(user):
     """Retorna as disciplinas que estão sendo cursadas e seus respectivos horários."""
     authentication()
 
-    periodo = click.prompt('\nPeríodo', default="2019.1", type=int)
+    periodo = click.prompt('\nPeríodo', default="2019.1", type=str)
     ano = periodo.split('.')[0]
     semestre = periodo.split('.')[1]
 
