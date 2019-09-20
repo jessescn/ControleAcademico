@@ -6,6 +6,57 @@ Esse código tem como usuário principal os estudantes da Universidade Federal d
 
 ## Comandos
 
+Abaixo estão algumas pequenas explicações acerca dos comandos e seus retornos. Os exemplos abaixo foram baseados em uma exportação no formato JSON, entretanto, você é livre para escolher o formato de exportação desejado.
+
+### Histórico
+
+``` bash
+ $ pipenv run controle historico
+```
+
+Retorna os dados acerca das disciplinas do histórico acadêmico. Tais dados estão estruturados da seguinte maneira:
+
+``` bash
+{
+ codigo, # Código de cadastro da disciplina
+ disciplina, # Nome da disciplina 
+ tipo, # Tipo da disciplina ['Obrigatória', 'Extracurricular', 'Optativa']
+ creditos, # Quantidades de créditos da disciplina
+ carga_horaria, # A sua carga horária, em horas
+ media, # A média do aluno nessa disciplina
+ situacao, # A situação do aluno na disciplina ['Aprovado', 'Dispensa', 'Em curso']
+ periodo # O período recomendado na qual a disciplina deve ser paga segundo o plano de curso 
+}
+```
+
+### Horários
+
+``` bash
+ $ pipenv run controle horario
+```
+
+Retorna as disciplinas e seus respectivos horários e salas de um determinado período letivo. Eles estão estruturados da seguinte maneira:
+
+```bash
+{
+ codigo, # Código de cadastro da disciplina
+ disciplina, # Nome da disciplina
+ turma, # Número da turma 
+ creditos, # Quantidades de créditos da disciplina
+ horarios: [ # Lista dos horários da disciplina 
+  {
+   dia, # Em formato de números [2,3,4,5,6]
+   horario, # Horário da disciplina nesse dia 
+   sala # Sala em que acontece a aula 
+  },
+  ...]
+ carga_horaria # A sua carga horária, em horas
+}
+```
+
+
+### help
+
 Para saber mais detalhes acerca dos comandos disponíveis, é so digitar o comando abaixo.
 
 ``` bash
