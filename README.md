@@ -88,4 +88,4 @@ $ pipenv run controle [COMMAND]
 
 Fique livre para sugerir melhorias, abrir issues e PRs :). 
 
-Obs: Obviamente, para ter o acesso ao Controle Acadêmico, é necessário fornecer matricula e senha, entretanto, eu não tenho nenhuma intenção de obter tais informações. Você pode dar uma olhada no código acessando o arquivo run.py
+Disclaimer: Obviamente, para ter o acesso ao Controle Acadêmico, é necessário fornecer matricula e senha, entretanto, eu não tenho nenhuma intenção de obter tais informações. Você pode dar uma olhada no código acessando o arquivo run.py
