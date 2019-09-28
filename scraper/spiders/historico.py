@@ -1,8 +1,8 @@
 """Arquivo responsável por conter o Spider
-    referente ao controle acadêmico e suas funções auxiliares
+    referente ao historico academico e suas funções auxiliares
 """
 import scrapy
-from historico_academico.items import DisciplinaItem
+from scraper.items import DisciplinaItem
 
 def authentation_failed(response):
     """ Função para checar se a autenticação falhou """

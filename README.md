@@ -33,6 +33,25 @@ $ pipenv install
 $ pipenv run controle [COMMAND]
 ```
 
+## Estrutura
+
+``` bash
+
+scraper/
+   |_ spiders/
+        |_ historico.py
+        |_ horario.py
+   |_ items.py
+   |_ middlewares.py
+   |_ pipelines.py
+   |_ settings.py
+
+data/
+
+run.py
+
+```
+
 ## Contribuição
 
 Fique livre para sugerir melhorias, abrir issues e PRs :). 

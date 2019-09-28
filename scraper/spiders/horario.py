@@ -1,6 +1,9 @@
 # -*- coding: utf-8 -*-
+"""Arquivo responsável por conter o Spider
+    referente ao horário e suas funções auxiliares
+"""
 import scrapy
-from historico_academico.items import HorarioItem
+from scraper.items import HorarioItem
 
 def authentation_failed(response):
     """ Função para checar se a autenticação falhou """
@@ -12,7 +15,7 @@ class HorarioSpider(scrapy.Spider):
     Scrapy responsável por acessar o controle
     acadêmico a partir da matricula e senha
     fornecidos pelo usuário e buscar os horários
-    das disciplinas de um determinado semestre. 
+    das disciplinas de um determinado semestre.
     """
     name = 'horario'
     start_urls = ['https://pre.ufcg.edu.br:8443/ControleAcademicoOnline/Controlador?command=Home']
@@ -32,19 +35,19 @@ class HorarioSpider(scrapy.Spider):
         )
 
     def after_login(self, response):
-            """ Callback da página de login
+        """ Callback da página de login
 
-            O método recebe a response e chama
-            o authentication_falied para checar se
-            os dados do login eram válidos.
-            """
-            if not authentation_failed(response):
-                yield scrapy.Request(response.urljoin('?command=AlunoHorarioConfirmar&ano={}&periodo={}'.format(self.ano, self.semestre)),
-                                                        callback=self.get_schedules)
+        O método recebe a response e chama
+        o authentication_falied para checar se
+        os dados do login eram válidos.
+        """
+        if not authentation_failed(response):
+            yield scrapy.Request(response.urljoin('?command=AlunoHorarioConfirmar&ano={}&periodo={}'
+                                                    .format(self.ano, self.semestre)), callback=self.get_schedules)
 
-                print('\nDados obtidos com sucesso!\n')
-            else:
-                print('\nCredenciais inválidas!\n')
+            print('\nDados obtidos com sucesso!\n')
+        else:
+            print('\nCredenciais inválidas!\n')
 
     def get_schedules(self, response):
         """Callback responsável por extrair as informações
@@ -55,22 +58,22 @@ class HorarioSpider(scrapy.Spider):
         dentre outros.
         """
         table = response.xpath('//table[@class="table table-bordered table-striped table-condensed"]/tbody/tr')
-        
+
         for line in table:
             data = line.xpath('./td//text()').getall()
             subject_schedules = []
 
             for i in range(4, len(data) - 1):
-                values = data[i].replace('\r\n', '' ).split()
+                values = data[i].replace('\r\n', '').split()
                 schedule_pair = {
                     "dia":values[0],
                     "horario": values[1],
                     "sala": values[2].replace('(', '').replace(')', '')
-                } 
+                }
                 subject_schedules.append(schedule_pair)
-            
-            subject = data[1].replace('\r\n', '' ).split('-')
-            
+
+            subject = data[1].replace('\r\n', '').split('-')
+
             schedule = HorarioItem(
                                 codigo=subject[0],
                                 disciplina=subject[1],
@@ -80,4 +83,3 @@ class HorarioSpider(scrapy.Spider):
                                 horarios=subject_schedules)
 
             yield schedule
-            

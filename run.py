@@ -2,8 +2,8 @@
 import click
 from scrapy.crawler import CrawlerProcess
 from scrapy.utils.project import get_project_settings
-from historico_academico.spiders.historico import HistoricoSpider
-from historico_academico.spiders.horario import HorarioSpider
+from scraper.spiders.historico import HistoricoSpider
+from scraper.spiders.horario import HorarioSpider
 
 class User(object):
 
@@ -25,7 +25,7 @@ def setup_process():
 
     process = CrawlerProcess(settings={
     'FEED_FORMAT': file_extension,
-    'FEED_URI': file_name,
+    'FEED_URI': "data/{}".format(file_name),
     'FEED_EXPORT_ENCODING':'utf-8',
     'LOG_ENABLED': False
     })
