@@ -4,6 +4,7 @@ from scrapy.crawler import CrawlerProcess
 from scrapy.utils.project import get_project_settings
 from scraper.spiders.historico import HistoricoSpider
 from scraper.spiders.horario import HorarioSpider
+from util.credits import print_credits
 
 class User(object):
 
@@ -66,7 +67,22 @@ def get_schedule(user):
     process = setup_process()
     process.crawl(HorarioSpider, matricula=user.matricula, senha=user.senha, ano=ano, semestre=semestre)
     process.start()
-    
-    
+
+""" 
+  Obrigatórias: 132 créditos
+  Optativas específicas: 40 créditos
+  Optativas gerais: 16 créditos
+  PTCC + TCC: 8 créditos
+""" 
+@cli.command('colacao-de-grau', short_help="Retorna a quantidade de creditos faltantes para colação de grau")
+@pass_user
+def get_degree_collation(user):
+    authentication()
+    process = CrawlerProcess({ 'LOG_ENABLED':False})
+    process.crawl(HistoricoSpider, matricula=user.matricula, senha=user.senha)
+    process.start()
+    print_credits(HistoricoSpider.items)
+
+
 if __name__ == '__main__':
     cli()
