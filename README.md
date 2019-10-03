@@ -71,6 +71,8 @@ Para executar a aplicação, é necessário ter instalado o pip na sua máquina.
 $ pip --version
 ```
 
+###  Development version 
+
 Instalando as dependências do projeto
 
 ``` bash
@@ -80,9 +82,23 @@ $ pip install --user pipenv
 # Instalando as dependências usando o pipenv
 $ pipenv install
 
-# Executando a CLI
+# Executando a versão development  da CLI  
 $ pipenv run controle [COMMAND]
 ```
+
+### Releasing version
+
+Caso você queira instalar o comando na sua máquina, será necessário ter a versão do pip para python 3
+
+``` bash
+# Instalando as dependências da CLI
+$ pip3 install --editable --user .
+
+# Executando a CLI em qualquer diretório do sistema
+ $ controle [COMMAND]
+```
+
+A partir da instalação acima, o comando **controle** fica acessível através do terminal globalmente na sua máquina. 
 
 ## Estrutura
 

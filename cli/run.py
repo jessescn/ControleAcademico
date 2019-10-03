@@ -25,7 +25,7 @@ def setup_process():
 
     process = CrawlerProcess(settings={
     'FEED_FORMAT': file_extension,
-    'FEED_URI': "data/{}".format(file_name),
+    'FEED_URI': file_name,
     'FEED_EXPORT_ENCODING':'utf-8',
     'LOG_ENABLED': False
     })

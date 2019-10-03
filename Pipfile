@@ -13,4 +13,4 @@ click = "*"
 python_version = "3.6"
 
 [scripts]
-controle="python3 run.py"
+controle="python3 cli/run.py"
