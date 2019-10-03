@@ -18,6 +18,7 @@ class HistoricoSpider(scrapy.Spider):
     """
     name = 'historico'
     start_urls = ['https://pre.ufcg.edu.br:8443/ControleAcademicoOnline/Controlador?command=Home']
+    items = []
 
     def __init__(self, matricula=None, senha=None):
         self.matricula = matricula
@@ -68,5 +69,6 @@ class HistoricoSpider(scrapy.Spider):
                                 media=data[5].strip().split('/n')[0],
                                 situacao=data[6],
                                 periodo=data[7])
+            self.items.append(subject)
 
             yield  subject
