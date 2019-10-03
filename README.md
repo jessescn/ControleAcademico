@@ -55,6 +55,16 @@ Retorna as disciplinas e seus respectivos horários e salas de um determinado pe
 ```
 
 
+### Colação de Grau
+
+Mostra as informações acerca das quantidades de créditos por tipo (cadeiras obrigatórias, complementares, específicas...) pagas pelo aluno no seguinte formato:
+
+              Créditos
+
+Obrigatórios:           (X/132)
+Optativos Específicos:  (X/40)
+Optativos Gerais:       (X/16)
+
 ### help
 
 Para saber mais detalhes acerca dos comandos disponíveis, é so digitar o comando abaixo.
