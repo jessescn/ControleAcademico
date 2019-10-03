@@ -68,15 +68,16 @@ def get_schedule(user):
     process.crawl(HorarioSpider, matricula=user.matricula, senha=user.senha, ano=ano, semestre=semestre)
     process.start()
 
-""" 
-  Obrigatórias: 132 créditos
-  Optativas específicas: 40 créditos
-  Optativas gerais: 16 créditos
-  PTCC + TCC: 8 créditos
-""" 
-@cli.command('colacao-de-grau', short_help="Retorna a quantidade de creditos faltantes para colação de grau")
+@cli.command('colacao', short_help="Retorna a situação atual dos creditos para colação de grau")
 @pass_user
 def get_degree_collation(user):
+    """Retorna uma visualização da situação do aluno em relação
+    a quantidade de créditos pagos e faltantes para colação de grau.
+    A quantidade de créditos no curso de CC são:\n
+    Obrigatórias: 132 créditos\n
+    Optativas específicas: 40 créditos\n
+    Optativas gerais: 16 créditos\n
+    PTCC + TCC: 8 créditos"""
     authentication()
     process = CrawlerProcess({ 'LOG_ENABLED':False})
     process.crawl(HistoricoSpider, matricula=user.matricula, senha=user.senha)

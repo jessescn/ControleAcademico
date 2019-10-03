@@ -6,7 +6,7 @@ Esse código tem como usuário principal os estudantes da Universidade Federal d
 
 ## Comandos
 
-Abaixo estão algumas pequenas explicações acerca dos comandos e seus retornos. Os exemplos abaixo foram baseados em uma exportação no formato JSON, entretanto, você é livre para escolher o formato de exportação desejado.
+Abaixo estão algumas pequenas explicações acerca dos comandos e seus retornos. Os exemplos abaixo foram baseados em uma exportação no formato JSON, entretanto, você é livre para escolher o formato de exportação desejado. Caso você tenha instalado a versão global, a parte **pipenv run** dos exemplos não é necessária. 
 
 ### Histórico
 
@@ -57,6 +57,10 @@ Retorna as disciplinas e seus respectivos horários e salas de um determinado pe
 
 ### Colação de Grau
 
+``` bash
+ $ pipenv run controle colacao
+```
+
 Mostra as informações acerca das quantidades de créditos por tipo (cadeiras obrigatórias, complementares, específicas...) pagas pelo aluno no seguinte formato:
 
 ```bash
@@ -70,10 +74,10 @@ Optativos Gerais:       (X/16)
 
 ### help
 
-Para saber mais detalhes acerca dos comandos disponíveis, é so digitar o comando abaixo.
+Para saber mais detalhes acerca dos comandos disponíveis, é so adicionar a linha abaixo ao comando.
 
 ``` bash
- $ pipenv run controle [COMANDO] --help
+$ --help
 ```
 
 ## Configuração
