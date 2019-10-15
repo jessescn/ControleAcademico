@@ -1,7 +1,8 @@
 
+import os, stat
+import json
 import click
 from scrapy.crawler import CrawlerProcess
-from scrapy.utils.project import get_project_settings
 from scraper.spiders.historico import HistoricoSpider
 from scraper.spiders.horario import HorarioSpider
 from util.credits import print_credits
@@ -17,28 +18,37 @@ pass_user = click.make_pass_decorator(User, ensure=True)
 @pass_user
 def authentication(user):
     """Recebe os dados de autenticação do usuário"""
-    user.matricula = click.prompt('\nInsira sua matricula', type=str)
-    user.senha =  click.prompt('Insira sua senha', hide_input=True, type=str)
+    try:
+        home = os.path.expanduser('~')
+        file_path = '{}/controleAcademico/user.json'.format(home)
+        file = open(file_path, "r")
+        student = json.loads(file.read())
+        user.matricula = student["matricula"]
+        user.senha = student["senha"]
+    except:
+        user.matricula = click.prompt('\nInsira sua matricula', type=str)
+        user.senha = click.prompt('Insira sua senha', hide_input=True, type=str)
 
 def setup_process():
     """Retorna o processo que executará o Spider"""
-    [ file_name, file_extension ] = file_config()
+    [file_name, file_extension] = file_config()
 
     process = CrawlerProcess(settings={
-    'FEED_FORMAT': file_extension,
-    'FEED_URI': file_name,
-    'FEED_EXPORT_ENCODING':'utf-8',
-    'LOG_ENABLED': False
+        'FEED_FORMAT': file_extension,
+        'FEED_URI': file_name,
+        'FEED_EXPORT_ENCODING':'utf-8',
+        'LOG_ENABLED': False
     })
     return process
 
 def file_config():
     """Recebe os dados referentes ao arquivo destino dos dados"""
-    file_name = click.prompt('\nQual será nome arquivo do arquivo?', default="dados")
+    file_name = click.prompt('\nQual será nome do arquivo?', default="dados")
     file_extension = click.prompt('Qual será o formato do arquivo?', default="json")
     file = '{}.{}'.format(file_name, file_extension)
-    return [ file , file_extension ]
+    file_path = '{}/controleAcademico/data/{}'.format(os.path.expanduser('~'), file)
 
+    return [file_path, file_extension]
 
 @click.group()
 def cli():
@@ -79,11 +89,40 @@ def get_degree_collation(user):
     Optativas gerais: 16 créditos\n
     PTCC + TCC: 8 créditos"""
     authentication()
-    process = CrawlerProcess({ 'LOG_ENABLED':False})
+    process = CrawlerProcess({'LOG_ENABLED':False})
     process.crawl(HistoricoSpider, matricula=user.matricula, senha=user.senha)
     process.start()
     print_credits(HistoricoSpider.items)
 
+
+def get_credentials_file():
+    """Retorna o objeto file referente as credenciais do aluno"""
+    home = os.path.expanduser('~')
+    file_path = home + "/controleAcademico/user.json"
+
+    try:
+        open(file_path, "w+")
+    except:
+        os.mkdir(home + '/controleAcademico')
+        os.mkdir(home + '/controleAcademico/data')
+
+    file = open(file_path, "w+")
+    os.chmod(file_path, stat.S_IRWXU)
+
+    return file
+
+@cli.command('credenciais', short_help="Armazena as credenciais do aluno")
+def store_user():
+    """Guarda as credenciais do aluno para futuras requisições
+    """
+    file = get_credentials_file()
+    user = click.prompt('\nInsira sua matricula', type=str)
+    senha = click.prompt('Insira sua senha', hide_input=True, type=str)
+
+    file.write(json.dumps({"matricula": user, "senha": senha}))
+    file.close()
+
+    print('\nCredenciais salvas!\n')
 
 if __name__ == '__main__':
     cli()

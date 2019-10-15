@@ -8,6 +8,8 @@ Esse código tem como usuário principal os estudantes da Universidade Federal d
 
 Abaixo estão algumas pequenas explicações acerca dos comandos e seus retornos. Os exemplos abaixo foram baseados em uma exportação no formato JSON, entretanto, você é livre para escolher o formato de exportação desejado. Caso você tenha instalado a versão global, a parte **pipenv run** dos exemplos não é necessária. 
 
+Obs: Os dados retornados dos comandos abaixo irão estar localizados, por default, na pasta `~/controleAcademico/data`. 
+
 ### Histórico
 
 ``` bash
@@ -72,6 +74,14 @@ Optativos Gerais:       (X/16)
 
 ```
 
+### Credenciais
+
+``` bash
+ $ pipenv run controle credenciais
+```
+
+Salva/Atualiza as credenciais do aluno em um arquivo `user.json` localizado em `~/controleAcademico/user.json`.
+
 ### help
 
 Para saber mais detalhes acerca dos comandos disponíveis, é so adicionar a linha abaixo ao comando.
@@ -82,7 +92,7 @@ $ --help
 
 ## Configuração
 
-Para executar a aplicação, é necessário ter instalado o pip na sua máquina. Você pode verificar se você tem o pip instalado atráves desse comando
+Para executar a aplicação, é necessário ter instalado o pip na sua máquina. Você pode verificar se você tem o pip instalado atráves desse comando.
 
 ``` bash
 $ pip --version
@@ -109,7 +119,7 @@ Caso você queira instalar o comando na sua máquina, será necessário ter a ve
 
 ``` bash
 # Instalando as dependências da CLI
-$ pip3 install --editable --user .
+$ pip3 install --user --editable  .
 
 # Executando a CLI em qualquer diretório do sistema
  $ controle [COMMAND]
