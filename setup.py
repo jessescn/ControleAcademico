@@ -11,7 +11,7 @@ setup(
     ],
     entry_points='''
         [console_scripts]
-        controle=cli.run:cli
+        controle=run:cli
     ''',
     python_requires='>=3',
 )

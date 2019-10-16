@@ -8,7 +8,7 @@ Esse código tem como usuário principal os estudantes da Universidade Federal d
 
 Abaixo estão algumas pequenas explicações acerca dos comandos e seus retornos. Os exemplos abaixo foram baseados em uma exportação no formato JSON, entretanto, você é livre para escolher o formato de exportação desejado. Caso você tenha instalado a versão global, a parte **pipenv run** dos exemplos não é necessária. 
 
-Obs: Os dados retornados dos comandos abaixo irão estar localizados, por default, na pasta `~/controleAcademico/data`. 
+Obs: Os dados retornados dos comandos abaixo irão estar localizados, por default, na pasta `~/Downloads/data`. 
 
 ### Histórico
 
@@ -140,9 +140,12 @@ scraper/
    |_ pipelines.py
    |_ settings.py
 
-data/
+util/
+   |_credits.py
 
 run.py
+setup.py
+
 
 ```
 
@@ -150,4 +153,4 @@ run.py
 
 Fique livre para sugerir melhorias, abrir issues e PRs :). 
 
-Disclaimer: Obviamente, para ter o acesso ao Controle Acadêmico, é necessário fornecer matricula e senha, entretanto, eu não tenho nenhuma intenção de obter tais informações. Você pode dar uma olhada no código acessando o arquivo run.py
+Disclaimer: Obviamente, para ter o acesso ao Controle Acadêmico, é necessário fornecer matricula e senha, entretanto, eu não tenho nenhuma intenção de obter tais informações. Você pode dar uma olhada no código relacionado a isso acessando o arquivo run.py

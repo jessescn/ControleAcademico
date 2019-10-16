@@ -7,20 +7,23 @@ from scraper.spiders.historico import HistoricoSpider
 from scraper.spiders.horario import HorarioSpider
 from util.credits import print_credits
 
+DATA_DIR = os.path.expanduser('~') + '/Downloads'
+CREDENTIALS_DIR = os.path.expanduser('~') + '/controleAcademico'
+
 class User(object):
 
     def __init__(self):
         self.matricula = None
         self.senha = None
 
-pass_user = click.make_pass_decorator(User, ensure=True)
 
-@pass_user
+PASS_USER = click.make_pass_decorator(User, ensure=True)
+
+@PASS_USER
 def authentication(user):
     """Recebe os dados de autenticação do usuário"""
     try:
-        home = os.path.expanduser('~')
-        file_path = '{}/controleAcademico/user.json'.format(home)
+        file_path = CREDENTIALS_DIR + '/user.json'
         file = open(file_path, "r")
         student = json.loads(file.read())
         user.matricula = student["matricula"]
@@ -39,6 +42,7 @@ def setup_process():
         'FEED_EXPORT_ENCODING':'utf-8',
         'LOG_ENABLED': False
     })
+    print('\nOs dados serão baixados para a pasta {}/data'.format(DATA_DIR))
     return process
 
 def file_config():
@@ -46,7 +50,7 @@ def file_config():
     file_name = click.prompt('\nQual será nome do arquivo?', default="dados")
     file_extension = click.prompt('Qual será o formato do arquivo?', default="json")
     file = '{}.{}'.format(file_name, file_extension)
-    file_path = '{}/controleAcademico/data/{}'.format(os.path.expanduser('~'), file)
+    file_path = '{}/data/{}'.format(DATA_DIR, file)
 
     return [file_path, file_extension]
 
@@ -56,7 +60,7 @@ def cli():
     pass
 
 @cli.command('historico', short_help="Retorna dados das disciplinas do historico acadêmico.")
-@pass_user
+@PASS_USER
 def get_subjects(user):
     """ Retorna os dados das disciplinas do aluno disponiveis no controle acadêmico. """
     authentication()
@@ -65,7 +69,7 @@ def get_subjects(user):
     process.start()
 
 @cli.command('horario', short_help="Retorna os horários das disciplinas.")
-@pass_user
+@PASS_USER
 def get_schedule(user):
     """Retorna as disciplinas que estão sendo cursadas e seus respectivos horários."""
     authentication()
@@ -79,7 +83,7 @@ def get_schedule(user):
     process.start()
 
 @cli.command('colacao', short_help="Retorna a situação atual dos creditos para colação de grau")
-@pass_user
+@PASS_USER
 def get_degree_collation(user):
     """Retorna uma visualização da situação do aluno em relação
     a quantidade de créditos pagos e faltantes para colação de grau.
@@ -94,17 +98,15 @@ def get_degree_collation(user):
     process.start()
     print_credits(HistoricoSpider.items)
 
-
 def get_credentials_file():
     """Retorna o objeto file referente as credenciais do aluno"""
-    home = os.path.expanduser('~')
-    file_path = home + "/controleAcademico/user.json"
+    file_path = CREDENTIALS_DIR + '/user.json'
 
     try:
         open(file_path, "w+")
     except:
-        os.mkdir(home + '/controleAcademico')
-        os.mkdir(home + '/controleAcademico/data')
+        os.mkdir(CREDENTIALS_DIR)
+        os.mkdir(DATA_DIR + '/data')
 
     file = open(file_path, "w+")
     os.chmod(file_path, stat.S_IRWXU)
@@ -115,14 +117,18 @@ def get_credentials_file():
 def store_user():
     """Guarda as credenciais do aluno para futuras requisições
     """
-    file = get_credentials_file()
-    user = click.prompt('\nInsira sua matricula', type=str)
-    senha = click.prompt('Insira sua senha', hide_input=True, type=str)
+    credentials_path = CREDENTIALS_DIR + '/user.json'
 
-    file.write(json.dumps({"matricula": user, "senha": senha}))
-    file.close()
+    if click.confirm('\nAs credenciais serão salvas localmente em {} e estarão visiveis a todos que a utilizam, você realmente deseja salvar?\n'.format(credentials_path)):
 
-    print('\nCredenciais salvas!\n')
+        file = get_credentials_file()
+        user = click.prompt('\nInsira sua matricula', type=str)
+        senha = click.prompt('Insira sua senha', hide_input=True, type=str)
+
+        file.write(json.dumps({"matricula": user, "senha": senha}))
+        file.close()
+
+        print('\nCredenciais salvas!\n')
 
 if __name__ == '__main__':
     cli()
