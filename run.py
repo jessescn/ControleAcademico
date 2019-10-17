@@ -7,8 +7,8 @@ from scraper.spiders.historico import HistoricoSpider
 from scraper.spiders.horario import HorarioSpider
 from util.credits import print_credits
 
-DATA_DIR = os.path.expanduser('~') + '/Downloads'
-CREDENTIALS_DIR = os.path.expanduser('~') + '/controleAcademico'
+DATA = os.path.expanduser('~') + '/Downloads'
+CREDENTIALS = os.path.expanduser('~') + '/controleAcademico'
 
 class User(object):
 
@@ -23,7 +23,7 @@ PASS_USER = click.make_pass_decorator(User, ensure=True)
 def authentication(user):
     """Recebe os dados de autenticação do usuário"""
     try:
-        file_path = CREDENTIALS_DIR + '/user.json'
+        file_path = CREDENTIALS + '/user.json'
         file = open(file_path, "r")
         student = json.loads(file.read())
         user.matricula = student["matricula"]
@@ -42,7 +42,7 @@ def setup_process():
         'FEED_EXPORT_ENCODING':'utf-8',
         'LOG_ENABLED': False
     })
-    print('\nOs dados serão baixados para a pasta {}/data'.format(DATA_DIR))
+    print('\nOs dados serão baixados para a pasta {}/data'.format(DATA))
     return process
 
 def file_config():
@@ -50,7 +50,7 @@ def file_config():
     file_name = click.prompt('\nQual será nome do arquivo?', default="dados")
     file_extension = click.prompt('Qual será o formato do arquivo?', default="json")
     file = '{}.{}'.format(file_name, file_extension)
-    file_path = '{}/data/{}'.format(DATA_DIR, file)
+    file_path = '{}/data/{}'.format(DATA, file)
 
     return [file_path, file_extension]
 
@@ -100,13 +100,13 @@ def get_degree_collation(user):
 
 def get_credentials_file():
     """Retorna o objeto file referente as credenciais do aluno"""
-    file_path = CREDENTIALS_DIR + '/user.json'
+    file_path = CREDENTIALS + '/user.json'
 
     try:
         open(file_path, "w+")
     except:
-        os.mkdir(CREDENTIALS_DIR)
-        os.mkdir(DATA_DIR + '/data')
+        os.mkdir(CREDENTIALS)
+        os.mkdir(DATA + '/data')
 
     file = open(file_path, "w+")
     os.chmod(file_path, stat.S_IRWXU)
@@ -117,7 +117,7 @@ def get_credentials_file():
 def store_user():
     """Guarda as credenciais do aluno para futuras requisições
     """
-    credentials_path = CREDENTIALS_DIR + '/user.json'
+    credentials_path = CREDENTIALS + '/user.json'
 
     if click.confirm('\nAs credenciais serão salvas localmente em {} e estarão visiveis a todos que a utilizam, você realmente deseja salvar?\n'.format(credentials_path)):
 
