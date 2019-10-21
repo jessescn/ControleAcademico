@@ -151,6 +151,6 @@ setup.py
 
 ## Contribuição
 
-Fique livre para sugerir melhorias, abrir issues e PRs :). 
+Tudo que precisas saber para seres o senhor das PRs você pode encontrar no [CONTRIBUTING](https://github.com/jessescn/ControleAcademico/blob/master/CONTRIBUTING.md) . 
 
 Disclaimer: Obviamente, para ter o acesso ao Controle Acadêmico, é necessário fornecer matricula e senha, entretanto, eu não tenho nenhuma intenção de obter tais informações. Você pode dar uma olhada no código relacionado a isso acessando o arquivo run.py

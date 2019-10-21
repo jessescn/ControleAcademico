@@ -1,4 +1,4 @@
-from util import credits
+from ..util import credits
 import unittest
 
 class GetGeneralOptativesMethodTestCase(unittest.TestCase):
