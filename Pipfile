@@ -8,7 +8,6 @@ verify_ssl = true
 [packages]
 scrapy = "*"
 click = "*"
-unittest = "*"
 
 [requires]
 python_version = "3.6"

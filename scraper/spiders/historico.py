@@ -56,7 +56,7 @@ class HistoricoSpider(scrapy.Spider):
         acadêmico. Ao receber a página, ele varre a tabela
         contendo as disciplinas, pegando os dados.
         """
-        table = response.xpath('//table[@class="table table-bordered"]/tbody/tr')
+        table = response.xpath('//table[@class="table table-bordered table-condensed"]/tbody/tr')
         for line in table:
             data = line.xpath('./td//text()').getall()
 
